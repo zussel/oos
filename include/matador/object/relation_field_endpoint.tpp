@@ -17,6 +17,9 @@ void relation_field_endpoint::set(object_store &store, const object_ptr<T> &owne
   store.mark_modified(owner);
 
   auto sptr = foreign_endpoint.lock();
+  if (!sptr) {
+    throw_object_exception("no foreign endpoint available");
+  }
   if (!sptr->is_insert_in_progress) {
     store.mark_modified(owner);
     field_serializer.set(field, owner, value);
@@ -34,6 +37,9 @@ void relation_field_endpoint::clear(object_store &store, const object_ptr<T> &ow
   is_remove_in_progress = true;
 
   auto sptr = foreign_endpoint.lock();
+  if (!sptr) {
+    throw_object_exception("no foreign endpoint available");
+  }
   if (!sptr->is_remove_in_progress) {
     store.mark_modified(owner);
     field_serializer.clear(field, owner);
@@ -51,6 +57,9 @@ void relation_field_endpoint::append(object_store &store, const object_ptr<T> &o
   is_insert_in_progress = true;
 
   auto sptr = foreign_endpoint.lock();
+  if (!sptr) {
+    throw_object_exception("no foreign endpoint available");
+  }
   if (!sptr->is_insert_in_progress) {
     store.mark_modified(owner);
     field_serializer.append(field, owner, value);
@@ -68,6 +77,9 @@ void relation_field_endpoint::remove(object_store &, const object_ptr<T> &owner,
   is_remove_in_progress = true;
 
   auto sptr = foreign_endpoint.lock();
+  if (!sptr) {
+    throw_object_exception("no foreign endpoint available");
+  }
   if (!sptr->is_remove_in_progress) {
 //    store.mark_modified(owner);
 

@@ -15,7 +15,9 @@ relation_field_endpoint::relation_field_endpoint(const std::string &f, relation_
 {}
 
 relation_field_endpoint::~relation_field_endpoint()
-{}
+{
+  std::cout << "destroying relation_field_endpoint\n";
+}
 
 }
 }
